@@ -13,8 +13,11 @@ function getRepoContributors(repoOwner, repoName, cb) {
   headers: {
     'User-Agent': 'request'
   }
-};
-  request.get(options, function(error, response, body) {
+  };
+  if (arg[2] === undefined || arg.length > 4) {
+    throw "Input must be two arguments";
+  } else {
+    request.get(options, function(error, response, body) {
       if (error) {
         return error;
       }
@@ -23,17 +26,19 @@ function getRepoContributors(repoOwner, repoName, cb) {
         cb(error, data);
       }
     });
+  }
 }
 
-getRepoContributors(arg[2], arg[3], function(err,result) {
-  if (err) {
-    console.log("Errors:", err);
-    return err;
-  }
-  for (var i = 0; i < result.length; i++ ){
-    downloadImageByURL(result[i].avatar_url, "./avatar/" + result[i].login + ".jpg")
-  };
-});
+  getRepoContributors(arg[2], arg[3], function(err,result) {
+    if (err) {
+      console.log("Errors:", err);
+      return err;
+    }
+    for (var i = 0; i < result.length; i++ ){
+      downloadImageByURL(result[i].avatar_url, "./avatar/" + result[i].login + ".jpg")
+    };
+  });
+
 
 function downloadImageByURL(url, filePath) {
    request.get(url)
