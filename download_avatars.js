@@ -3,7 +3,7 @@ var fs = require('fs');
 var https = require('https');
 var GITHUB_USER = "deefourple";
 var GITHUB_TOKEN = "dd92027e4fe310106d942c4f3dc21f9c8885751f";
-
+var arg = process.argv;
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -25,7 +25,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     });
 }
 
-getRepoContributors("jquery", "jquery", function(err,result) {
+getRepoContributors(arg[2], arg[3], function(err,result) {
   if (err) {
     console.log("Errors:", err);
     return err;
