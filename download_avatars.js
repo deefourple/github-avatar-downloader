@@ -1,10 +1,15 @@
 var request = require('request');
 var fs = require('fs');
-var https = require('https');
 var GITHUB_USER = "deefourple";
 var GITHUB_TOKEN = "dd92027e4fe310106d942c4f3dc21f9c8885751f";
 var arg = process.argv;
+
 console.log('Welcome to the GitHub Avatar Downloader!');
+
+function downloadImageByURL(url, filePath) {
+   request.get(url)
+  .pipe(fs.createWriteStream(filePath));
+}
 
 function getRepoContributors(repoOwner, repoName, cb) {
   //path to user's repository
@@ -43,7 +48,3 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 
 //callback function to download all urls found during the for loop
-function downloadImageByURL(url, filePath) {
-   request.get(url)
-  .pipe(fs.createWriteStream(filePath));
-}
